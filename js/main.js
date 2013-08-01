@@ -15,14 +15,15 @@ function checkPreAuth() {
 }
 
 function handleLogin() {
-	alert("HandleLogin");
+	//alert("HandleLogin");
     var form = $("#loginForm");    
     //disable the button so we can't resubmit while we wait
     $("#submitButton",form).attr("disabled","disabled");
     var u = $("#username", form).val();
     var p = $("#password", form).val();
     if(u != '' && p!= '') {
-        $.ajax({  
+    	//alert("non empty");
+         $.ajax({  
              type: "POST",  
              //url: "http://dev.nmmu.ac.za/shaun/service/service.asmx/GetADFullName",  
              url: "http://dev.nmmu.ac.za/shaun/service/service.asmx/AuthenticateUser",
@@ -30,21 +31,22 @@ function handleLogin() {
              //data: "{'StudentNumber':'" + $('#TextboxStudentNumber').val() + "'}",  
              //data: "{'StaffNumber':'380152'}",
              //data: "{'ADUsername':'shaun'}",
+             //data: "{'Username':'kingkong', 'Password':'kingkong'}",
+             //data: "{'Username':" + u + ", 'Password':" + p + "}",
              data: "{'Username':'kingkong', 'Password':'kingkong'}",
              contentType: "application/json; charset=utf-8",  
              dataType: "json",  
              success: function(msg) {  
                  AjaxSucceeded(msg);  
              },  
-             error: AjaxFailed   
-         });  
-         $("#submitButton").removeAttr("disabled");
-        },"json");
-    } else {
+             error: AjaxFailed  
+           }); 
+        } else {
         navigator.notification.alert("You must enter a username and password", function() {});
         $("#submitButton").removeAttr("disabled");
     }
     return false;
+    
 }
 
           function AjaxSucceeded(result) {  
